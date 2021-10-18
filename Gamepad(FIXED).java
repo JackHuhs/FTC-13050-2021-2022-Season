@@ -86,7 +86,14 @@ public class Gamepad extends LinearOpMode {
                 leftDownDrive.setPower(-wheelPower);
                 rightDownDrive.setPower(-wheelPower);
 
-            }//else if (gamepad1.right_trigger>0.5){
+            } else {
+                leftDrive.setPower(0);
+                rightDrive.setPower(0);
+                leftDownDrive.setPower(0);
+                rightDownDrive.setPower(0);
+            }
+            
+            //else if (gamepad1.right_trigger>0.5){
             //     liftMotor.setPower(launchPower);
 
             // }else if (gamepad1.right_bumper){
