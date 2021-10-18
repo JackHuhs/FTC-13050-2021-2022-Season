@@ -63,16 +63,16 @@ public class Gamepad extends LinearOpMode {
             
             //Turning
             if(gamepad1.left_stick_x>0.75){
-                leftDrive.setPower(wheelPower);
-                rightDrive.setPower(-wheelPower);
-                leftDownDrive.setPower(wheelPower);
-                rightDownDrive.setPower(-wheelPower);
-           
-            } else if (gamepad1.left_stick_x<-0.75){
                 leftDrive.setPower(-wheelPower);
                 rightDrive.setPower(wheelPower);
                 leftDownDrive.setPower(-wheelPower);
-                rightDownDrive.setPower(wheelPower);  
+                rightDownDrive.setPower(wheelPower);
+           
+            } else if (gamepad1.left_stick_x<-0.75){
+                leftDrive.setPower(wheelPower);
+                rightDrive.setPower(-wheelPower);
+                leftDownDrive.setPower(wheelPower);
+                rightDownDrive.setPower(-wheelPower);  
             //forward and backwards
              } else if (gamepad1.right_stick_y>0.75){
                 leftDrive.setPower(wheelPower);
