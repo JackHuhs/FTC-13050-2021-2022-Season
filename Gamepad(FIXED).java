@@ -1,11 +1,10 @@
-//overcommenting edition
-package org.firstinspires.ftc.teamcode; //import le package
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode; //import said Linear OP mode type
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp; //import teleop
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp; //import zed teleop
-import com.qualcomm.robotcore.hardware.DcMotor; //import la dcmotor class
-import com.qualcomm.robotcore.hardware.Servo; //import the servo class
-import com.qualcomm.robotcore.util.ElapsedTime; // i dunno just import this stuff
+package org.firstinspires.ftc.teamcode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 //blank line
 //blank line
