@@ -68,11 +68,11 @@ public class Blue_SpinToWin extends LinearOpMode{
     DcMotorEx leftDownDrive;
     DcMotorEx rightDownDrive;
 
-//     double piDouble = 3.14159265359; //literally pi
-//     double wheelDiameter = (1/3); //in feet
-//     double wheelCircumference = wheelDiameter*piDouble; //in feet
-//     double power = 0.5;
-//     double TPR = 1120;
+    // double piDouble = 3.14159265359; //literally pi
+    // double wheelDiameter = (1/3); //in feet
+    // double wheelCircumference = wheelDiameter*piDouble; //in feet
+    // double power = 0.5;
+    // double TPR = 1120;
 
     @Override
     public void runOpMode() throws InterruptedException{
@@ -92,12 +92,28 @@ public class Blue_SpinToWin extends LinearOpMode{
 
         //actual autonomous path
         
-        turn((int)(90),(int)(900));
+        turn((int)(90),(int)(900)); //right 90 degrees
         
-        driveForward((int)(401),(int)(900));
+        driveForward((int)(401),(int)(900)); //forward 9 inches
         
         //SPIN DUCKS HERE
         
-        turn((int)(-90),(int)(900));
+        turn((int)(-90),(int)(900)); //left 90 degrees
+        
+        driveForward((int)(1025),(int)(900)); //forward 23 inches
+        
+        turn((int)(-90),(int)(900)); //left 90 degrees
+        
+        driveForward((int)(936),(int)(900)); //forward 21 inches
+        
+        //PLACE STARTING BOX ON FOUNTAIN THING
+        
+        driveForward((int)(-936),(int)(900)); //backward 21 inches
+        
+        turn((int)(-90),(int)(900)); //left 90 degrees
+        
+        driveForward((int)(312),(int)(900)); //forward 7 inches
+        
+        //PARK (END)
     }
 }
