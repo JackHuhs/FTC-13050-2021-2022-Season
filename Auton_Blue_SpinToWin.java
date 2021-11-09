@@ -68,11 +68,11 @@ public class Blue_SpinToWin extends LinearOpMode{
     DcMotorEx leftDownDrive;
     DcMotorEx rightDownDrive;
 
-    double piDouble = 3.14159265359; //literally pi
-    double wheelDiameter = (1/3); //in feet
-    double wheelCircumference = wheelDiameter*piDouble; //in feet
-    double power = 0.5;
-    double TPR = 1120;
+//     double piDouble = 3.14159265359; //literally pi
+//     double wheelDiameter = (1/3); //in feet
+//     double wheelCircumference = wheelDiameter*piDouble; //in feet
+//     double power = 0.5;
+//     double TPR = 1120;
 
     @Override
     public void runOpMode() throws InterruptedException{
