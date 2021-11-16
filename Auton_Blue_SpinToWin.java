@@ -92,6 +92,8 @@ public class Blue_SpinToWin extends LinearOpMode{
 
         //actual autonomous path
         
+        driveForward((int)(300),(int)(900));// forward to prevent hitting the wall when turning
+        
         turn((int)(90),(int)(900)); //right 90 degrees
         
         driveForward((int)(401),(int)(900)); //forward 9 inches
@@ -104,15 +106,15 @@ public class Blue_SpinToWin extends LinearOpMode{
         
         turn((int)(-90),(int)(900)); //left 90 degrees
         
-        driveForward((int)(936),(int)(900)); //forward 21 inches
+        driveForward((int)(836),(int)(900)); //forward 21 inches
         
         //PLACE STARTING BOX ON FOUNTAIN THING
         
-        driveForward((int)(-936),(int)(900)); //backward 21 inches
+        driveForward((int)(-1750),(int)(900)); //backward 21 inches
         
-        turn((int)(-90),(int)(900)); //left 90 degrees
+        //turn((int)(-90),(int)(900)); //left 90 degrees
         
-        driveForward((int)(312),(int)(900)); //forward 7 inches
+        //driveForward((int)(312),(int)(900)); //forward 7 inches
         
         //PARK (END)
     }
