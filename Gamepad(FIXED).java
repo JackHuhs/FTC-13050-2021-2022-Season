@@ -1,10 +1,12 @@
-package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
+//overcommenting edition
+package org.firstinspires.ftc.teamcode; //import le package
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode; //import said Linear OP mode type
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp; //import teleop
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp; //import zed teleop
+import com.qualcomm.robotcore.hardware.DcMotor; //import la dcmotor class
+import com.qualcomm.robotcore.hardware.Servo; //import the servo class
+import com.qualcomm.robotcore.util.ElapsedTime; // i dunno just import this stuff
 import com.qualcomm.robotcore.util.Range;
 //blank line
 //blank line
@@ -17,7 +19,10 @@ public class Gamepad extends LinearOpMode {
     DcMotor rightDrive;
     DcMotor leftDownDrive;
     DcMotor rightDownDrive;
-    double power = 1;
+    DcMotor intakeArm;
+    DcMotor liftMotor;
+    Servo intServ;
+    
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -35,13 +40,18 @@ public class Gamepad extends LinearOpMode {
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
         leftDownDrive  = hardwareMap.get(DcMotor.class, "left_down_drive");
         rightDownDrive = hardwareMap.get(DcMotor.class, "right_down_drive");
+        liftMotor = hardwareMap.get(DcMotor.class, "lift_motor");
+        intServ = hardwareMap.get(Servo.class, "intSer");
+
+        //intakeArm = hardwareMap.get(DcMotorEx.class, "intake_arm");
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
         leftDownDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDownDrive.setDirection(DcMotor.Direction.REVERSE);
-        // liftMotor.setDirection(DcMotor.Direction.FORWARD); //change when making launcher
+        //intakeArm.setDirection(DcMotor.Direction.FORWARD);
+        liftMotor.setDirection(DcMotor.Direction.FORWARD); //change when making launcher
         // launcherMotor2.setDirection(DcMotor.Direction.FORWARD);
         // intakeMotor.setDirection(DcMotor.Direction.FORWARD); //change when making intake
 
@@ -52,6 +62,13 @@ public class Gamepad extends LinearOpMode {
         while (opModeIsActive()) {
             // Setup a variable for each drive wheel to save power level for telemetry
             double wheelPower;
+            double intakePower = 0.5;
+            boolean intakeOut = false;
+            boolean intakeRunning = false;
+            double armMaxRange = 0.0;
+            double armMinRange = 1.0;
+            double armHome = 0.0;
+
             //double intakePower;
             wheelPower = 0.85; //different speeds, change to 1.00 for 100 percent of the motor's RPM
             //intakePower = .5; //change later
@@ -74,16 +91,16 @@ public class Gamepad extends LinearOpMode {
                 rightDownDrive.setPower(-wheelPower);  
             //forward and backwards
              } else if (gamepad1.right_stick_y>0.75){
-                leftDrive.setPower(wheelPower);
-                rightDrive.setPower(wheelPower);
-                leftDownDrive.setPower(wheelPower);
-                rightDownDrive.setPower(wheelPower);
-
-            } else if (gamepad1.right_stick_y<-0.75){
                 leftDrive.setPower(-wheelPower);
                 rightDrive.setPower(-wheelPower);
                 leftDownDrive.setPower(-wheelPower);
                 rightDownDrive.setPower(-wheelPower);
+
+            } else if (gamepad1.right_stick_y<-0.75){
+                leftDrive.setPower(wheelPower);
+                rightDrive.setPower(wheelPower);
+                leftDownDrive.setPower(wheelPower);
+                rightDownDrive.setPower(wheelPower);
 
             } else {
                 leftDrive.setPower(0);
@@ -91,13 +108,40 @@ public class Gamepad extends LinearOpMode {
                 leftDownDrive.setPower(0);
                 rightDownDrive.setPower(0);
             }
+            if(gamepad2.x){
+                intServ.setPosition(0.90);
+                sleep(800);
+            }
+            if(gamepad2.y){
+                intServ.setPosition(1.0);
+                sleep(800);
+            }
             
-            //else if (gamepad1.right_trigger>0.5){
-            //     liftMotor.setPower(launchPower);
-
-            // }else if (gamepad1.right_bumper){
-            //     liftMotor.setPower(-launchPower);
-            // }
+            
+           /* if (gamepad2.x){l
+                if (intakeOut){
+                    
+                } else {
+                    intakeArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    intakeArm.setTargetPosition((int)(1680));
+                    intakeArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    intakeArm.setVelocity((int)(600));
+                    while(intakeArm.isBusy()){
+                        telemetry.addData("position",intakeArm.getCurrentPosition());
+                        telemetry.update();
+                    }
+                }
+            }*/
+            
+            if (gamepad2.right_trigger>0.5){
+                liftMotor.setPower(wheelPower - 100);
+            }else if (gamepad2.left_trigger>0.5){
+                liftMotor.setPower(-wheelPower - 100);
+            } else {
+                liftMotor.setPower(0);
+            }
+            
+        
         }
     }
 }
