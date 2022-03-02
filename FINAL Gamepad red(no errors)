@@ -1,0 +1,262 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Red_SpinToWin", group="Linear Opmode")
+//@Disabled
+public class Red_SpinToWin extends LinearOpMode{
+    
+    //functions
+    public void driveForward(int dst, int spd){ //can also drive backwards with a negative speed
+        leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftDownDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDownDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        
+        leftDrive.setTargetPosition((int) (-dst));
+        rightDrive.setTargetPosition((int) (-dst));
+        leftDownDrive.setTargetPosition((int) (-dst));
+        rightDownDrive.setTargetPosition((int) (-dst));
+        
+        leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftDownDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightDownDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        
+        leftDrive.setVelocity((int) (spd));
+        rightDrive.setVelocity((int) (spd));
+        leftDownDrive.setVelocity((int) (spd));
+        rightDownDrive.setVelocity((int) (spd));
+        
+        while (Math.abs(leftDrive.getCurrentPosition())<Math.abs(dst)||Math.abs(rightDrive.getCurrentPosition())<Math.abs(dst)){
+            telemetry.addData("position", leftDrive.getCurrentPosition());
+            telemetry.addData("position", rightDrive.getCurrentPosition());
+            telemetry.addData("position", leftDownDrive.getCurrentPosition());
+            telemetry.addData("position", rightDownDrive.getCurrentPosition());
+            telemetry.update();
+        }
+        leftDrive.setVelocity((int) (0));
+        rightDrive.setVelocity((int) (0));
+        leftDownDrive.setVelocity((int) (0));
+        rightDownDrive.setVelocity((int) (0));
+    }
+
+    public void claw(int dgr, int spd){ //positive dgr is right, negative dgr is left
+        double turnPos = 575*dgr/90;
+        if (dgr < 0){
+            spd*=-1;
+        }
+        
+        intServ.setPosition((int)(turnPos));
+        
+        //intServ.setMode(Servo.RunMode.RUN_TO_POSITION);
+        
+        //intServ.setVelocity((int)(-spd));
+    }
+    
+    public void liftUp(int dst, int spd){ //can also drive backwards with a negative speed
+        liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //liftMotorTwo.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        
+        liftMotor.setTargetPosition((int) (-dst));
+        //liftMotorTwo.setTargetPosition((int) (-dst));
+        
+        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //liftMotorTwo.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        
+        liftMotor.setVelocity((int) (spd));
+        //liftMotorTwo.setVelocity((int) (spd));
+        
+        while (liftMotor.isBusy()){
+            telemetry.addData("position", liftMotor.getCurrentPosition());
+            //telemetry.addData("position", liftMotorTwo.getCurrentPosition());
+            telemetry.update();
+        }
+        liftMotor.setVelocity((int) (0));
+        //liftMotorTwo.setVelocity((int) (0));
+    }
+    
+    public void turn(int dgr, int spd){ //positive dgr is right, negative dgr is left
+        double turnPos = 575*dgr/90;
+        if (dgr < 0){
+            spd*=-1;
+        }
+        leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftDownDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDownDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        
+        leftDrive.setTargetPosition((int) (-turnPos));
+        rightDrive.setTargetPosition((int) (turnPos));
+        leftDownDrive.setTargetPosition((int) (-turnPos));
+        rightDownDrive.setTargetPosition((int) (turnPos));
+        
+        leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftDownDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightDownDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        
+        leftDrive.setVelocity((int) (-spd));
+        rightDrive.setVelocity((int) (spd));
+        leftDownDrive.setVelocity((int) (-spd));
+        rightDownDrive.setVelocity((int) (spd));
+        while (Math.abs(leftDrive.getCurrentPosition())<Math.abs(dgr)||Math.abs(rightDrive.getCurrentPosition())<Math.abs(dgr)){
+            telemetry.addData("position", leftDrive.getCurrentPosition());
+            telemetry.addData("position", rightDrive.getCurrentPosition());
+            telemetry.addData("position", leftDownDrive.getCurrentPosition());
+            telemetry.addData("position", rightDownDrive.getCurrentPosition());
+            telemetry.update();
+        }
+        
+        leftDrive.setVelocity((int) (0));
+        rightDrive.setVelocity((int) (0));
+        leftDownDrive.setVelocity((int) (0));
+        rightDownDrive.setVelocity((int) (0));
+        leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftDownDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDownDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        
+    }
+    
+    private ElapsedTime runtime = new ElapsedTime();
+    //variables
+    DcMotorEx leftDrive;
+    DcMotorEx rightDrive;
+    DcMotorEx leftDownDrive;
+    DcMotorEx rightDownDrive;
+    DcMotor StW;
+    DcMotorEx liftMotor;
+    Servo intServ;
+    //DcMotorEx liftMotorTwo;
+
+    // double piDouble = 3.14159265359; //literally pi
+    // double wheelDiameter = (1/3); //in feet
+    // double wheelCircumference = wheelDiameter*piDouble; //in feet
+    // double power = 0.5;
+    // double TPR = 1120;
+
+    @Override
+    public void runOpMode() throws InterruptedException{
+        telemetry.addData("Status","Initialized");
+        telemetry.update();
+
+        //hardware map config
+        leftDrive=hardwareMap.get(DcMotorEx.class,"left_drive");
+        rightDrive=hardwareMap.get(DcMotorEx.class,"right_drive");
+        leftDownDrive=hardwareMap.get(DcMotorEx.class,"left_down_drive");
+        rightDownDrive=hardwareMap.get(DcMotorEx.class,"right_down_drive");
+        StW=hardwareMap.get(DcMotor.class,"STW");
+        liftMotor = hardwareMap.get(DcMotorEx.class, "lift_motor");
+        intServ = hardwareMap.get(Servo.class, "intSer");
+        //liftMotorTwo = hardwareMap.get(DcMotorEx.class, "liftMotorTwo");
+
+        leftDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftDownDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightDownDrive.setDirection(DcMotor.Direction.REVERSE);
+        StW.setDirection(DcMotor.Direction.REVERSE);
+        liftMotor.setDirection(DcMotor.Direction.REVERSE);
+        //liftMotorTwo.setDirection(DcMotor.Direction.FORWARD);
+
+
+        //start
+        waitForStart();
+        runtime.reset();
+
+        //actual autonomous path
+        
+        // StW.setPower(0.19);
+        // sleep(1000);
+        // StW.setPower(0);
+        // driveForward((int)(120),(int)(400));
+        
+        sleep(500);
+        driveForward((int)(-154.2),(int)(82));
+        sleep(500);
+        StW.setPower(0.185);
+        sleep(4000);
+        StW.setPower(0);
+        turn((int)(-770),(int)(900));
+
+
+        //see duck
+
+        
+        sleep(500);
+        driveForward((int)(-432),(int)(600));
+        sleep(500);
+        
+        //sleep(500);
+        //turn((int)(-140),(int)(900));
+        claw((int)(20), (int)(200));
+        sleep(1500);
+        turn((int)(-160),(int)(900));
+       
+        sleep(500);
+        driveForward((int)(500),(int)(900));
+        
+        //StW.setPower(0.10);
+        
+        
+        //works but glitches
+        // driveForward((int)(-160),(int)(900));// forward to prevent hitting the wall when turning
+        // sleep(500);
+        // turn((int)(-170),(int)(900));
+        // turn((int)(-150),(int)(900));
+        // sleep(500);
+        // driveForward((int)(-140),(int)(900));
+        // sleep(500);
+        // turn((int)(-170),(int)(900));
+        // turn((int)(-165),(int)(900));
+        // sleep(500);
+        // driveForward((int)(-110),(int)(900));
+        // StW.setPower(-0.2);
+        // sleep(9000);
+        // StW.setPower(0);
+        //turn((int)(90),(int)(900));// turn left 90 degrees
+
+//raise it here
+
+        //liftUp((int)(2), (int)(200));
+        
+        //driveForward((int)(-10),(int)(200));
+   //open claw
+        
+        //claw((int)(20), (int)(200));
+        //driveForward((int)(50),(int)(900));
+
+// lower
+        
+       // claw((int)(-20), (int)(200));
+        //liftUp((int)(2), (int)(200));
+        // turn((int)(40),(int)(900));
+        
+        // driveForward((int)(-50),(int)(900));
+        
+        // StW.setPower(0.2);
+        
+        // sleep(3000);
+        
+        // StW.setPower(0);
+        
+        // driveForward((int)(50),(int)(1200));
+        
+        
+        
+        //lift
+        //hub levels: 2 7/8 inches, 8 5/8 inches, 15 inches
+        liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //liftMotorTwo.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        
+        
+    }
+}
